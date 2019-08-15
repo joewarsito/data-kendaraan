@@ -1,14 +1,14 @@
 const User = require("../models/user")
 const {toLower} = require ('lodash')
-var validator = require("email-validator");
+// var validator = require("email-validator");
 
 const create = async (req) => {
     let { nama, email, hp } = req.body
     email = toLower(email)
 
-    if(validator.validate(email) === false) {
-        return "Wrong type of `email`"
-    }
+    // if(validator.validate(email) === false) {
+    //     return "Wrong type of `email`"
+    // }
 
     var insert_data = {
         nama,
@@ -37,7 +37,6 @@ const getAll = async () => {
                 hp: v.hp
             }
         })
-
         return data
     } catch(err) {
         throw err
@@ -64,7 +63,7 @@ const update = async (id, updated_data) => {
     let data = {
         nama,
         email,
-        hp
+        hp,
     }
 
     try {

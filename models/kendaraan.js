@@ -5,12 +5,13 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
-let bookSchema = new Schema({
+let kendSchema = new Schema({
     merk: String,
     tipe: String,
     roda: String,
     tahun: String,
     bbm: String,
+    author: String,
     harga: {
         type: Number,
         default: 0
@@ -25,6 +26,6 @@ let bookSchema = new Schema({
     }
 })
 
-let Kend = mongoose.model("Book", bookSchema)
+let Kend = mongoose.model("Kendaraan", kendSchema)
 
 module.exports = Kend

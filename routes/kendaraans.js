@@ -63,6 +63,7 @@ router.put("/:id", async (req, res) => {
         tahun: req.body.tahun,
         bbm: req.body.bbm,
         harga: req.body.harga,
+        author: req.body.author,
         fresh: req.body.fresh
     }
 

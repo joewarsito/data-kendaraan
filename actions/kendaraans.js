@@ -1,7 +1,8 @@
 const Kend = require("../models/kendaraan")
+const User = require("../models/user")
 
 const create = async (req) => {
-    let { merk, tipe, roda, tahun, bbm, harga } = req.body
+    let { merk, tipe, roda, tahun, bbm, harga, author } = req.body
 
     var insert_data = {
         merk,
@@ -9,7 +10,8 @@ const create = async (req) => {
         roda,
         tahun,
         bbm,
-        harga
+        harga,
+        author
     }
 
     let data = new Kend(insert_data)
@@ -25,23 +27,32 @@ const create = async (req) => {
 
 const getAll = async () => {
     try {
-        let query = await Kend.find({}).exec()
-        let data = query.map((v, i) => {
-            return {
-                merk: v.merk,
-                tipe: v.tipe,
-                roda: v.roda,
-                tahun: v.tahun,
-                bbm: v.bbm,
-                harga: v.harga
-            }
-        })
-
-        return data
-    } catch(err) {
-        throw err
+    let query = await Kend.find({ })
+    .populate([
+    {
+        path: 'author',
+        model: User
     }
+    ]).exec()
+    let data = query.map((v, i) => {
+                    return {
+                        merk: v.merk,
+                        tipe: v.tipe,
+                        roda: v.roda,
+                        tahun: v.tahun,
+                        bbm: v.bbm,
+                        harga: v.harga,
+                        author: v.author
+                    }
+                })
+    console.log(data)
+    return data
+} catch(err) {
+    console.log(err)
+    throw err
+    }   
 }
+
 
 const getDetail = async (id) => {
     try {
@@ -56,7 +67,7 @@ const getDetail = async (id) => {
 }
 
 const update = async (id, updated_data) => {
-    let { merk, tipe, roda, tahun, bbm, harga, fresh } = updated_data
+    let { merk, tipe, roda, tahun, bbm, harga, author, fresh } = updated_data
     let opts = {
         new: fresh === "true" ? true : false
     }
@@ -66,7 +77,8 @@ const update = async (id, updated_data) => {
         roda,
         tahun,
         bbm,
-        harga
+        harga,
+        author
     }
 
     try {
